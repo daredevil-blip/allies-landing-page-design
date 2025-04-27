@@ -22,6 +22,6 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    include: ['three']
+    include: ['three', '@react-three/fiber', '@react-three/drei']
   },
 }));

@@ -4,7 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-const Shield = ({ color = '#10B981', speed = 0.5, ...props }) => {
+const Shield = ({ color = '#10B981', speed = 0.5 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   
@@ -19,7 +19,7 @@ const Shield = ({ color = '#10B981', speed = 0.5, ...props }) => {
   });
   
   return (
-    <group ref={groupRef} {...props}>
+    <group ref={groupRef}>
       {/* Shield base */}
       <mesh ref={meshRef}>
         <cylinderGeometry args={[0.8, 1, 0.2, 32]} />
@@ -48,7 +48,7 @@ const ShieldCanvas = ({ color = '#10B981', autoRotate = true }) => {
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <pointLight position={[-10, -10, -10]} intensity={0.5} />
-        <Shield color={color} speed={autoRotate ? 0.5 : 0} position={[0, 0, 0]} />
+        <Shield color={color} speed={autoRotate ? 0.5 : 0} />
         <Environment preset="city" />
         <OrbitControls enableZoom={false} enablePan={false} autoRotate={autoRotate} autoRotateSpeed={1} />
       </Canvas>

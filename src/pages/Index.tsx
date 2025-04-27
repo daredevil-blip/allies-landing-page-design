@@ -6,9 +6,20 @@ import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import StatsCounter from '@/components/StatsCounter';
-import ShieldModel from '@/components/ShieldModel';
+import { Suspense } from 'react';
 import { Users, CheckCircle, Calendar, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+// Import the Shield model with lazy loading
+import dynamic from 'react-dynamic-import';
+const ShieldModel = dynamic(() => import('@/components/ShieldModel'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-96 flex items-center justify-center bg-emerald-50">
+      <p>טוען מודל תלת מימד...</p>
+    </div>
+  )
+});
 
 const Stats = () => {
   const stats = [
@@ -100,7 +111,9 @@ const Shield3D = () => {
             </p>
           </div>
           <div className="h-96 order-1 md:order-2">
-            <ShieldModel />
+            <Suspense fallback={<div className="h-full flex items-center justify-center"><p>טוען...</p></div>}>
+              {typeof window !== 'undefined' && <ShieldModel />}
+            </Suspense>
           </div>
         </div>
       </div>
