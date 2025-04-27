@@ -1,24 +1,38 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Shield } from 'lucide-react';
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 py-4">
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+    }`}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between h-20">
           <div className="flex items-center space-x-2">
-            <Shield className="h-8 w-8 text-orange-500" />
-            <span className="text-xl font-bold text-gray-900">InsureConsult</span>
+            <img src="/logo.svg" alt="Logo" className="h-8" />
+            <span className="text-xl font-bold text-gray-900">Allies</span>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#services" className="text-gray-700 hover:text-orange-500 transition-colors">Services</a>
-            <a href="#about" className="text-gray-700 hover:text-orange-500 transition-colors">About</a>
-            <a href="#testimonials" className="text-gray-700 hover:text-orange-500 transition-colors">Testimonials</a>
-            <a href="#contact" className="text-gray-700 hover:text-orange-500 transition-colors">Contact</a>
+            <a href="#why" className="text-gray-700 hover:text-emerald-500 transition-colors">Why Allies?</a>
+            <a href="#features" className="text-gray-700 hover:text-emerald-500 transition-colors">Features</a>
+            <a href="#pricing" className="text-gray-700 hover:text-emerald-500 transition-colors">Pricing</a>
+            <a href="#contact" className="text-gray-700 hover:text-emerald-500 transition-colors">Contact</a>
           </div>
-          <Button className="bg-orange-500 hover:bg-orange-600">Get Started</Button>
+          <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+            Login
+          </Button>
         </div>
       </div>
     </nav>
