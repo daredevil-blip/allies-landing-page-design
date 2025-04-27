@@ -11,7 +11,15 @@ import ServicesPage from "./pages/ServicesPage";
 import WhyUs from "./pages/WhyUs";
 import LetsStart from "./pages/LetsStart";
 
-const queryClient = new QueryClient();
+// Create a new QueryClient to use in the application
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // Default is true
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

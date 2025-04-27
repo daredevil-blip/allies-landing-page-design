@@ -1,81 +1,17 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { ArrowLeft, CheckCircle, Phone, Mail, HelpCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, useGLTF, Environment } from '@react-three/drei';
+import ShieldModel from '@/components/ShieldModel';
 import { toast } from 'sonner';
 
-const InsuranceModel = ({ currentStep }: { currentStep: number }) => {
-  const { scene } = useGLTF('/insurance_shield.glb');
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.5;
-      
-      // Animation based on current step
-      const targetScale = 1 + (currentStep * 0.1);
-      meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.05);
-    }
-  });
-
-  return (
-    <primitive 
-      ref={meshRef} 
-      object={scene} 
-      position={[0, -1, 0]} 
-      scale={[1, 1, 1]}
-    />
-  );
-};
-
-// Fallback component if 3D model fails to load
-const FallbackShield = ({ currentStep }: { currentStep: number }) => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.5;
-      
-      // Animation based on current step
-      const targetScale = 1 + (currentStep * 0.1);
-      meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.05);
-    }
-  });
-
-  return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color="#10B981" />
-    </mesh>
-  );
-};
-
-const Model3D = ({ currentStep }: { currentStep: number }) => {
-  return (
-    <div className="h-80 w-full rounded-xl overflow-hidden">
-      <Canvas>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-        <Suspense fallback={<FallbackShield currentStep={currentStep} />}>
-          <InsuranceModel currentStep={currentStep} />
-        </Suspense>
-        <Environment preset="city" />
-        <OrbitControls enableZoom={false} enablePan={false} />
-      </Canvas>
-    </div>
-  );
-};
-
+// Simplified Form Step component
 const FormStep = ({ 
   currentStep, 
   formData, 
@@ -85,7 +21,7 @@ const FormStep = ({
 }: { 
   currentStep: number, 
   formData: any, 
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, 
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void, 
   handleNext: () => void, 
   handlePrevious: () => void 
 }) => {
@@ -96,9 +32,10 @@ const FormStep = ({
           <Label htmlFor="insurance_type" className="text-right block">סוג הביטוח שאתה מחפש</Label>
           <select
             id="insurance_type"
+            name="insurance_type"
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-right"
             value={formData.insurance_type}
-            onChange={(e) => handleInputChange({ target: { name: 'insurance_type', value: e.target.value } } as any)}
+            onChange={handleInputChange}
             dir="rtl"
           >
             <option value="">בחר סוג ביטוח</option>
@@ -131,9 +68,10 @@ const FormStep = ({
           <Label htmlFor="coverage" className="text-right block">רמת הכיסוי הרצויה</Label>
           <select
             id="coverage"
+            name="coverage"
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-right"
             value={formData.coverage}
-            onChange={(e) => handleInputChange({ target: { name: 'coverage', value: e.target.value } } as any)}
+            onChange={handleInputChange}
             dir="rtl"
           >
             <option value="">בחר רמת כיסוי</option>
@@ -236,7 +174,7 @@ const LetsStart = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -259,7 +197,7 @@ const LetsStart = () => {
     }
   };
   
-  const insuranceTypes = {
+  const insuranceTypes: Record<string, string> = {
     'life': 'ביטוח חיים',
     'health': 'ביטוח בריאות',
     'car': 'ביטוח רכב',
@@ -267,7 +205,7 @@ const LetsStart = () => {
     'business': 'ביטוח עסקי'
   };
   
-  const coverageTypes = {
+  const coverageTypes: Record<string, string> = {
     'basic': 'בסיסי',
     'standard': 'סטנדרטי',
     'premium': 'פרימיום',
@@ -333,9 +271,9 @@ const LetsStart = () => {
                         />
                       </div>
                       <div className="relative">
-                        <Suspense fallback={<div className="h-80 w-full flex items-center justify-center">טוען מודל תלת מימדי...</div>}>
-                          <Model3D currentStep={currentStep} />
-                        </Suspense>
+                        <div className="h-80 w-full">
+                          <ShieldModel />
+                        </div>
                         <div className="mt-4 text-center">
                           <h3 className="text-lg font-medium">מגן הביטוח שלך</h3>
                           <p className="text-sm text-gray-500">
@@ -351,8 +289,8 @@ const LetsStart = () => {
                       </div>
                       <h2 className="text-2xl font-bold mb-2">הבקשה נשלחה בהצלחה!</h2>
                       <p className="text-gray-600 max-w-md mx-auto mb-6">
-                        תודה {formData.name}, פנייתך ל{insuranceTypes[formData.insurance_type as keyof typeof insuranceTypes]} 
-                        ברמת כיסוי {coverageTypes[formData.coverage as keyof typeof coverageTypes]} התקבלה. 
+                        תודה {formData.name}, פנייתך ל{insuranceTypes[formData.insurance_type] || ''} 
+                        ברמת כיסוי {coverageTypes[formData.coverage] || ''} התקבלה. 
                         נציג יצור איתך קשר בהקדם.
                       </p>
                       <Button onClick={resetForm} className="bg-emerald-500 hover:bg-emerald-600">
@@ -396,8 +334,5 @@ const LetsStart = () => {
     </div>
   );
 };
-
-// Needed for React Three Fiber
-const Suspense = motion.div;
 
 export default LetsStart;

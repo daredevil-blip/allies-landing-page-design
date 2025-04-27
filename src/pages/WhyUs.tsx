@@ -51,12 +51,13 @@ const industries = [
 const StatsArc = () => {
   const COLORS = ['#10B981', '#6366F1', '#F59E0B', '#3B82F6', '#EC4899'];
   
+  // Fixed chart config with proper dark/light theme values
   const chartConfig = {
-    life: { label: "ביטוח חיים", theme: { light: "#10B981" } },
-    health: { label: "ביטוח בריאות", theme: { light: "#6366F1" } },
-    car: { label: "ביטוח רכב", theme: { light: "#F59E0B" } },
-    home: { label: "ביטוח דירה", theme: { light: "#3B82F6" } },
-    other: { label: "אחר", theme: { light: "#EC4899" } }
+    category1: { label: "ביטוח חיים", theme: { light: "#10B981", dark: "#047857" } },
+    category2: { label: "ביטוח בריאות", theme: { light: "#6366F1", dark: "#4F46E5" } },
+    category3: { label: "ביטוח רכב", theme: { light: "#F59E0B", dark: "#D97706" } },
+    category4: { label: "ביטוח דירה", theme: { light: "#3B82F6", dark: "#2563EB" } },
+    category5: { label: "אחר", theme: { light: "#EC4899", dark: "#DB2777" } }
   };
 
   return (
@@ -78,7 +79,11 @@ const StatsArc = () => {
                 <PieChart>
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Pie
-                    data={industries.map(item => ({ name: item.name, value: item.value, key: Object.keys(chartConfig)[industries.indexOf(item)] }))}
+                    data={industries.map((item, index) => ({ 
+                      name: item.name, 
+                      value: item.value, 
+                      key: `category${index + 1}` 
+                    }))}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
@@ -243,7 +248,15 @@ const WhyUs = () => {
       <div className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 text-right">
+            <div className="order-2 md:order-1">
+              <img 
+                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40" 
+                alt="שירותי ביטוח" 
+                className="rounded-lg shadow-xl w-full"
+              />
+            </div>
+            
+            <div className="order-1 md:order-2 space-y-6 text-right">
               <h2 className="text-3xl font-bold text-gray-900">אנחנו משרד ביטוח עם מוניטין מוכח</h2>
               <p className="text-lg text-gray-700">
                 עם למעלה מ-15 שנות ניסיון בענף הביטוח, אנו גאים להיות אחד ממשרדי הביטוח המובילים בישראל. הצוות המקצועי שלנו מורכב ממומחים בעלי ניסיון רב בכל תחומי הביטוח.
@@ -271,14 +284,6 @@ const WhyUs = () => {
               <div className="pt-4">
                 <Button className="bg-emerald-500 hover:bg-emerald-600">צור קשר</Button>
               </div>
-            </div>
-            
-            <div className="flex justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1521791136064-7986c2920216" 
-                alt="צוות מקצועי" 
-                className="rounded-lg shadow-xl max-w-md w-full"
-              />
             </div>
           </div>
         </div>
