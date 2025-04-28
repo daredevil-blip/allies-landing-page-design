@@ -1,14 +1,24 @@
 
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, ComponentType } from 'react';
 
-const dynamic = (importFunc: () => Promise<any>, { ssr = true, loading }: { ssr?: boolean, loading?: () => JSX.Element } = {}) => {
+interface DynamicOptions {
+  ssr?: boolean;
+  loading?: () => JSX.Element;
+}
+
+function dynamic<T = any>(
+  importFunc: () => Promise<{ default: ComponentType<T> }>,
+  { ssr = true, loading }: DynamicOptions = {}
+): React.FC<T> {
   const LazyComponent = lazy(importFunc);
   
-  return (props: any) => (
-    <Suspense fallback={loading ? loading() : <div>Loading...</div>}>
-      {(!ssr && typeof window === 'undefined') ? null : <LazyComponent {...props} />}
-    </Suspense>
-  );
-};
+  return function DynamicComponent(props: T): JSX.Element {
+    return (
+      <Suspense fallback={loading ? loading() : <div>Loading...</div>}>
+        {(!ssr && typeof window === 'undefined') ? null : <LazyComponent {...props} />}
+      </Suspense>
+    );
+  };
+}
 
 export default dynamic;
