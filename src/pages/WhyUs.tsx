@@ -32,10 +32,10 @@ const reasons = [
 ];
 
 const stats = [
-  { name: 'לקוחות מרוצים', value: 5000, color: '#10B981' },
-  { name: 'פרויקטים', value: 1200, color: '#6366F1' },
-  { name: 'תביעות שטופלו', value: 3500, color: '#F59E0B' },
-  { name: 'שנות ניסיון', value: 15, color: '#3B82F6' }
+  { name: 'לקוחות מרוצים', value: 5000, color: '#10B981', icon: null },
+  { name: 'פרויקטים', value: 1200, color: '#6366F1', icon: null },
+  { name: 'תביעות שטופלו', value: 3500, color: '#F59E0B', icon: null },
+  { name: 'שנות ניסיון', value: 15, color: '#3B82F6', icon: null }
 ];
 
 const WhyUs = () => {
@@ -65,7 +65,8 @@ const WhyUs = () => {
         stats={stats.map(stat => ({
           label: stat.name,
           value: stat.value,
-          color: stat.color
+          color: stat.color,
+          icon: stat.icon
         }))}
         title="המספרים מדברים בעצמם"
         description="אנו גאים בהישגים שלנו ובאמון שלקוחותינו נותנים בנו"
