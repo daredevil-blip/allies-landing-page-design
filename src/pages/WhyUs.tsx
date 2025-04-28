@@ -6,7 +6,7 @@ import { Shield, HeartHandshake, Clock, ThumbsUp } from 'lucide-react';
 import ReasonCard from '@/components/why-us/ReasonCard';
 import AboutSection from '@/components/why-us/AboutSection';
 import IndustryStats from '@/components/why-us/IndustryStats';
-import { StatsCounter } from '@/components/StatsCounter';
+import StatsCounter from '@/components/StatsCounter';
 
 const reasons = [
   {

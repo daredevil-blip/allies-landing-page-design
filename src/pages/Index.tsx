@@ -1,4 +1,3 @@
-
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
@@ -11,7 +10,7 @@ import { Users, CheckCircle, Calendar, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Import the Shield model with lazy loading
-import dynamic from 'react-dynamic-import';
+import dynamic from '@/utils/react-dynamic-import';
 const ShieldModel = dynamic(() => import('@/components/ShieldModel'), {
   ssr: false,
   loading: () => (
