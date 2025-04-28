@@ -1,4 +1,3 @@
-
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
@@ -7,6 +6,8 @@ import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import StatsCounter from '@/components/StatsCounter';
+import PartnersCarousel from '@/components/PartnersCarousel';
+import Subscribe from '@/components/Subscribe';
 import { Suspense } from 'react';
 import { Users, CheckCircle, Calendar, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -132,6 +133,8 @@ const Index = () => {
       <ServiceShowcase />
       <Shield3D />
       <Stats />
+      <PartnersCarousel />
+      <Subscribe />
       <Testimonials />
       <Contact />
       <Footer />
