@@ -1,53 +1,89 @@
 
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, PlayCircle } from 'lucide-react';
+import { PlayCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
-    <div className="min-h-screen flex items-center pt-16 bg-gradient-to-bl from-emerald-50 to-white">
+    <div className="min-h-screen flex items-center pt-16 bg-gradient-to-br from-[#FFF5EA] to-white">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 text-right">
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight text-gray-900 animate-fade-in">
-              פתרונות חכמים<br />
-              לעסק שלך<br />
-              נמצאים כאן.
-            </h1>
-            <p className="text-lg text-gray-600 md:pr-12 animate-fade-in">
-              המטרה שלנו היא לספק ללקוחות שלנו את הפתרונות הטובים ביותר תוך כדי שמירה על צמיחה מתמדת של העסק.
-            </p>
-            <div className="flex gap-4 items-center justify-end animate-fade-in">
-              <Button variant="ghost" className="text-gray-700 flex items-center gap-2">
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-block text-orange-500 font-medium mb-2"
+            >
+              הכי טוב בעולם
+            </motion.span>
+            
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-5xl md:text-6xl font-bold leading-tight text-[#0A142F]"
+            >
+              טייל, תהנה<br />
+              <span className="relative">
+                ותחיה חיים
+                <svg className="absolute -bottom-2 right-0 w-full" viewBox="0 0 200 8" fill="none">
+                  <path d="M0 4C50 4 150 4 200 4" stroke="#FFB6C6" strokeWidth="7" strokeLinecap="round"/>
+                </svg>
+              </span><br />
+              מלאים ושמחים
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="text-lg text-gray-600 md:pr-12"
+            >
+              צא להרפתקה של פעם בחיים ותגלה מקומות חדשים, תרבויות מרתקות וחוויות בלתי נשכחות
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="flex gap-4 items-center justify-end"
+            >
+              <Button 
+                variant="ghost" 
+                className="text-gray-700 flex items-center gap-2 hover:bg-orange-50"
+              >
                 צפה בסרטון
                 <PlayCircle className="h-5 w-5" />
               </Button>
-              <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-6">
-                <ArrowLeft className="mr-2 h-5 w-5" />
-                בוא נתחיל
+              <Button 
+                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2"
+              >
+                מצא עוד
               </Button>
-            </div>
-            <div className="flex justify-end items-center gap-8 pt-8">
-              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40" alt="Hero" className="rounded-lg w-full max-w-md" />
-            </div>
-            <div className="flex items-center justify-end gap-8 pt-8">
-              <img src="/public/lovable-uploads/c6ef560d-ee3f-4a98-af56-2251abf83f99.png" alt="לוגו גוגל" className="h-8" />
-              <img src="https://a.slack-edge.com/bv1-10/slack_logo-ebd02d1.svg" alt="לוגו סלאק" className="h-8" />
-              <img src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/zeus/kratos/849e5056.svg" alt="לוגו טוקופדיה" className="h-8" />
-              <img src="https://style.monday.com/static/media/monday_logo_short.2f74542a.svg" alt="לוגו מאנדיי" className="h-8" />
-            </div>
+            </motion.div>
           </div>
-          <div className="relative hidden md:block">
-            <div className="absolute -left-8 top-1/2 transform -translate-y-1/2">
-              <div className="bg-emerald-500 text-white p-3 rounded-full">
-                <span className="text-sm font-medium">הצוות היצירתי שלנו</span>
-                <div className="flex -space-x-2 mt-2">
-                  <img src="https://i.pravatar.cc/32?img=1" alt="" className="w-8 h-8 rounded-full border-2 border-white" />
-                  <img src="https://i.pravatar.cc/32?img=2" alt="" className="w-8 h-8 rounded-full border-2 border-white" />
-                  <img src="https://i.pravatar.cc/32?img=3" alt="" className="w-8 h-8 rounded-full border-2 border-white" />
-                </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div className="relative">
+              <img
+                src="/lovable-uploads/1724b198-8349-4894-893d-f4704f04cd58.png"
+                alt="מטייל שמח"
+                className="w-full h-auto max-w-xl mx-auto"
+              />
+              <div className="absolute -right-4 -top-4">
+                <img src="/lovable-uploads/c6ef560d-ee3f-4a98-af56-2251abf83f99.png" alt="מטוס" className="w-16 h-16 animate-bounce" />
+              </div>
+              <div className="absolute -left-4 bottom-1/4">
+                <img src="/lovable-uploads/c6ef560d-ee3f-4a98-af56-2251abf83f99.png" alt="מטוס" className="w-12 h-12 animate-bounce delay-150" />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
